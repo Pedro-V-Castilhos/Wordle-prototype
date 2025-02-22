@@ -9,7 +9,6 @@ let remaining_attempts = [6];
 
 //Pega uma palavra aleatória dentre as 200 disponíveis
 let word = words[Math.trunc(Math.random() * 200)].toUpperCase();
-
 //Função principal do jogo
 function testar_palavra(user_guess) {
   //Verifica se a entrada é composta por 5 caracteres de letra
@@ -54,7 +53,10 @@ function testar_palavra(user_guess) {
 
   for (let i = 0; i < 5; i++) {
     //Verifica se a letra está na palavra chave, mas em outra posição, se ela já não foi marcada como correta
-    if (remaining_chars.indexOf(user_guess[i]) !== -1) {
+    if (
+      remaining_chars.indexOf(user_guess[i]) !== -1 &&
+      word[i] !== user_guess[i]
+    ) {
       //Se sim, remove ela dos caracteres restantes para comparação
       remaining_chars = remaining_chars.replace(user_guess[i], "-");
       //Adiciona a classe correspondente ao elemento de comparação atual
@@ -74,7 +76,7 @@ function testar_palavra(user_guess) {
     alert(
       "Parabéns!\n\nVocê acertou a palavra!\n\nRecarregue a página para jogar novamente."
     );
-    return;
+    location.reload();
   }
 
   //Reduz em um o número de tentativas
@@ -87,6 +89,7 @@ function testar_palavra(user_guess) {
     alert(
       `Que pena!\n\nA palavra certa era ${word}\n\nRecarregue a página para jogar novamente.`
     );
+    location.reload();
   }
   //Reseta o input
   input.value = "";
